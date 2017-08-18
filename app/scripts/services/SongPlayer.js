@@ -26,8 +26,13 @@
             preload: true
         });
 
-    currentSong = song;
- };
+            currentSong = song;
+        };
+
+        var playSong = function() {
+            currentBuzzObject.play();
+            currentSong.playing = true;
+        };
 
         SongPlayer.play = function(song) {
             // if another song is selected the if statement will check to for status
@@ -35,8 +40,7 @@
 
                 setSong(song);
 
-                currentBuzzObject.play();
-                song.playing = true;
+                playSong();
 
                 } else if (currentSong === song) {
                     if (currentBuzzObject.isPaused()) {
