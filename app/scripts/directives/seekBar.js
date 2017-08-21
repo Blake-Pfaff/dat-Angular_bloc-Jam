@@ -42,6 +42,7 @@
             scope.fillStyle = function() {
                 return {width: percentString()};
             };
+
             // * @function onClickSeekBar
             // * @desc sets horz % of the bar based on the click & drag
             // * @param {Object} event
@@ -49,7 +50,9 @@
                 var percent = calculatePercent(seekBar, event);
                 scope.value = percent * scope.max;
             };
-
+            // * @function trackTHumb
+            // * @desc tracks were the thumb is on the playerbar
+            // * @param none
             scope.trackThumb = function() {
                 $document.bind('mousemove.thumb', function(event) {
                     var percent = calculatePercent(seekBar, event);
@@ -57,6 +60,7 @@
                     scope.value = percent * scope.max;
          });
      });
+
 
      $document.bind('mouseup.thumb', function() {
          $document.unbind('mousemove.thumb');
