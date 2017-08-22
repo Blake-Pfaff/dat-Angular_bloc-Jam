@@ -46,6 +46,9 @@
             // * @function onClickSeekBar
             // * @desc sets horz % of the bar based on the click & drag
             // * @param {Object} event
+            scope.thumbStyle = function() {
+                return {left: percentString()};
+            };
             scope.onClickSeekBar = function(event) {
                 var percent = calculatePercent(seekBar, event);
                 scope.value = percent * scope.max;
