@@ -1,7 +1,7 @@
 
 
 (function() {
-    function SongPlayer(Fixtures) {
+    function SongPlayer($rootScope, Fixtures) {
         var SongPlayer = {};
         // @desc sets album data from Fixtures
         var currentAlbum = Fixtures.getAlbum();
@@ -23,6 +23,12 @@
         currentBuzzObject = new buzz.sound(song.audioUrl, {
             formats: ['mp3'],
             preload: true
+        });
+      //  timeupdate is a HTML5 audio event used with Buzz's bind() method
+        currentBuzzObject.bind('timeupdate', function() {
+            $rootScope.$apply(function() {
+                SongPlayer.currentTime = currentBuzzObject.getTime();
+            });
         });
 
             SongPlayer.currentSong = song;
@@ -124,5 +130,5 @@
 
      angular
          .module('blocJams')
-         .factory('SongPlayer', ['Fixtures', SongPlayer]);
+         .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
  })();
