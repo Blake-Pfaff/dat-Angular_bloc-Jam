@@ -20,11 +20,22 @@
         replace: true,
         restrict: 'E',
         scope: { },
+        scope: {
+          onChange: '&'
+        },
         link: function(scope, element, attributes) {
             scope.value = 0;
             scope.max = 100;
             // jQuery object
             var seekBar = $(element);
+            // notify the direcvive of changes to the attribute values w/ $observe
+            attributes.$observe('value', function(newValue) {
+                scope.value = newValue;
+            });
+
+            attributes.$observe('max', function(newValue) {
+                scope.max = newValue;
+            });
 
             // * @function precentString
             // * @desc caluclates the precent of a string?
@@ -52,6 +63,7 @@
             scope.onClickSeekBar = function(event) {
                 var percent = calculatePercent(seekBar, event);
                 scope.value = percent * scope.max;
+                notifyOnChange(scope.value);
             };
             // * @function trackTHumb
             // * @desc tracks were the thumb is on the playerbar
@@ -60,16 +72,29 @@
                 $document.bind('mousemove.thumb', function(event) {
                     var percent = calculatePercent(seekBar, event);
                     scope.$apply(function() {
-                    scope.value = percent * scope.max;
-         });
-     });
+                        scope.value = percent * scope.max;
+                        notifyOnChange(scope.value);
+                    });
+            });
 
+            // * @function notifyOnChange
+            // * @desc notify onChange that  scope.value has changed
+            // * @param newValue
 
-     $document.bind('mouseup.thumb', function() {
-         $document.unbind('mousemove.thumb');
-         $document.unbind('mouseup.thumb');
-     });
- };
+            var notifyOnChange = function(newValue) {
+                if (typeof scope.onChange === 'function') {
+                    scope.onChange({value: newValue});
+                }
+            };
+
+            // * @function
+            // * @desc tracks were the thumb is on the playerbar
+            // * @param none
+                $document.bind('mouseup.thumb', function() {
+                    $document.unbind('mousemove.thumb');
+                    $document.unbind('mouseup.thumb');
+                });
+            };
 
        }
     }
