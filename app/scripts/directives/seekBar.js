@@ -47,6 +47,17 @@
                 var percent = value / max * 100;
                 return percent + "%";
             };
+
+            // * @function notifyOnChange
+            // * @desc notify onChange that  scope.value has changed
+            // * @param newValue
+
+            var notifyOnChange = function(newValue) {
+                if (typeof scope.onChange === 'function') {
+                    scope.onChange({value: newValue});
+                }
+            };
+
             // * @function fillStyle
             // * @desc sets the play bars % as the width from %strng
             // * @param {Object} song
@@ -77,15 +88,7 @@
                     });
             });
 
-            // * @function notifyOnChange
-            // * @desc notify onChange that  scope.value has changed
-            // * @param newValue
 
-            var notifyOnChange = function(newValue) {
-                if (typeof scope.onChange === 'function') {
-                    scope.onChange({value: newValue});
-                }
-            };
 
             // * @function
             // * @desc tracks were the thumb is on the playerbar
