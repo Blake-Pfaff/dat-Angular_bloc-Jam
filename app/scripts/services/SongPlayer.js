@@ -32,7 +32,8 @@
         });
 
             SongPlayer.currentSong = song;
-        };
+
+      };
 
         var playSong = function() {
             currentBuzzObject.play();
@@ -52,7 +53,7 @@
 
         SongPlayer.currentSong = null;
 
-
+        SongPlayer.volume = null;
         //  @desc Current playback time (in seconds) of currently playing song
         //  @type {Number}
 
@@ -123,6 +124,13 @@
              if (currentBuzzObject) {
                  currentBuzzObject.setTime(time);
              }
+        };
+
+        SongPlayer.setVolume = function(volume) {
+          if (currentBuzzObject) {
+              currentBuzzObject.setVolume(volume);
+          }
+
         };
 
         return SongPlayer;
